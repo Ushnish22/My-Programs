@@ -1,9 +1,6 @@
-//console.dir(document.domain);
-//console.log(document.URL);
-//document.title=123;
-
-let x=document.getElementById('main-header');
-let y=document.getElementById('header-title');
-console.log(x);
-x.style.borderBottom='solid 3px #000';
-y.style.textDecorationColor='#555';
+var items=document.getElementsByClassName('list-group-item');
+items[2].style.backgroundColor='green';
+items[0].style.fontWeight='bold';
+items[1].style.fontWeight='bold';
+items[2].style.fontWeight='bold';
+items[3].style.fontWeight='bold';

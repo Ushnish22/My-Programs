@@ -1,35 +1,49 @@
-var items=document.querySelector('#items');
-console.log(items.parentElement);
-items.parentElement.style.backgroundColor='#f4f4f4';
+var form=document.getElementById('addForm');
+var itemList=document.getElementById('items');
 
+form.addEventListener('submit',addItem);
 
-console.log(items.lastChild);
-console.log(items.lastElementChild);
-items.lastElementChild.style.backgroundColor='coral';
+itemList.addEventListener('click',removeItem);
 
-console.log(items.firstChild);
-console.log(items.firstElementChild);
-items.firstElementChild.style.backgroundColor='yellow';
+function addItem(e)
+{
+    e.preventDefault();
 
-console.log(items.nextSibling);
-console.log(items.nextElementSibling);
+    var newItem=document.getElementById('item').value;
 
-console.log(items.previousSibling);
-console.log(items.previousElementSibling);
-items.previousElementSibling.style.color = 'red';
+    var li=document.createElement('li');
 
-var newDiv=document.createElement('div');
+    li.className='list-group-item';
 
-newDiv.className='hello';
-newDiv.id='hello1';
-newDiv.setAttribute('title','Hello Div');
+    li.appendChild(document.createTextNode(newItem));
 
-var newDivText=document.createTextNode('Hello World');
-newDiv.appendChild(newDivText);
+    var deleteBtn=document.createElement('button');
 
-var container=document.querySelector('header .container');
-var h1=document.querySelector('header h1');
+    deleteBtn.className ='btn btn-danger btn-sm float-right delete';
 
-console.log(newDiv);
+    deleteBtn.appendChild(document.createTextNode('X'));
 
-container.insertBefore(newDiv,h1);
+    li.appendChild(deleteBtn);
+
+    var editBtn=document.createElement('button');
+
+    editBtn.className ='btn btn-danger btn-sm float-right edit';
+
+    editBtn.appendChild(document.createTextNode('Edit'));
+
+    li.appendChild(editBtn);
+
+    itemList.appendChild(li);
+}
+
+function removeItem(e)
+{
+    if(e.target.classList.contains('delete'))
+    {
+        if(confirm('Are You Sure?'))
+        {
+            var li=e.target.parentElement;
+            itemList.removeChild(li);
+        }
+    }
+}

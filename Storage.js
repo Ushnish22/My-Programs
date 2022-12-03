@@ -4,7 +4,11 @@ function saveData()
     let email = document.getElementById('email').value;
     let contact = document.getElementById('Contact').value;
 
-    localStorage.setItem('Name',username)
-    localStorage.setItem('Email',email)
-    localStorage.setItem('Contact',contact)
+    let myObj = {
+        Name: username,
+        Email: email,
+        Contact: contact
+    }
+
+    localStorage.setItem('MyObj', myObj);
 }

@@ -1,6 +1,11 @@
-var items=document.getElementsByClassName('list-group-item');
-items[2].style.backgroundColor='green';
-items[0].style.fontWeight='bold';
-items[1].style.fontWeight='bold';
-items[2].style.fontWeight='bold';
-items[3].style.fontWeight='bold';
+var items=document.querySelector('.list-group-item:nth-child(2)');
+items.style.background = "green";
+
+var items=document.querySelector('.list-group-item:nth-child(3)');
+items.style.visibility = "hidden";
+
+var odd=document.querySelectorAll('.list-group-item:nth-child(odd)');
+for(var i=0;i<odd.length;i++)
+{
+    odd[i].style.backgroundColor='green';
+}

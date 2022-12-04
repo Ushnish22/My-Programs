@@ -37,16 +37,38 @@
                 Contact: contact
             }
         
-            localStorage.setItem(myObj.Name,JSON.stringify(myObj));
+            localStorage.setItem(myObj.Email,JSON.stringify(myObj));
             showNewUserOnScreen(myObj);
         }
         function showNewUserOnScreen(user)
         {
             let parentNode=document.getElementById('listOfUsers');
-            let childHTML = `<li> ${user.Name} - ${user.Email}</li>`;
+            let childHTML = `<li id=${user.Email}> ${user.Name} - ${user.Email}
+                <button onclick=deleteUser('${user.Email}')>Delete</button>
+                <button onclick=editUser('${user.Email}')>Edit</button>
+                </li>`;
 
             parentNode.innerHTML=parentNode.innerHTML + childHTML;
         }
+        function deleteUser(email)
+        {
+                console.log(email);
+                localStorage.removeItem(email);
+                removeFromScreen(email);
+        }
+        function editUser(email)
+        {
+                console.log(email);
+                localStorage.removeItem(email);
+                removeFromScreen(email);
+        }
+        function removeFromScreen(email){
+                let parentNode = document.getElementById('listOfUsers');
+                let childNodeToBeDeleted = document.getElementById(email);
+
+                parentNode.removeChild(childNodeToBeDeleted)
+            }
+
         </script>
 </body>
 </html>

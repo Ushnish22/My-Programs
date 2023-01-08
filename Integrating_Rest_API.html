@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrating_Rest_API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity=
+    "sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity=
+    "sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h5>Book a call and our representative will call you within 1hr of selected time</h5>
+    <hr width="100%" size="4px">
+    <div class="form">
+        <label for="price">Price</label><br>
+        <input type="text" id="price" class="form-control" placeholder="Price"><br>
+        <label for="description">Description</label><br>
+        <input type="text" id="description" class="form-control"
+        placeholder="Description"><br>
+        <label for="type">Product-Type</label>
+        <select id="type">
+            <option>Electronics</option>
+            <option>Food Items</option>
+            <option>Skincare</option>
+        </select><br>
+        <button onclick="saveData()">Submit</button>
+
+    </div>
+    <ul id="listOfUsers"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+    <script>function saveData()
+        {
+            let cost=document.getElementById('price').value;
+            let description=document.getElementById('description').value;
+            let type=document.getElementById('type').value;
+
+            let myObj={
+                Price: cost,
+                Description: description,
+                Product: type
+            }
+
+            axios.post("https://crudcrud.com/api/026c7c3374924b6f87c3bb78749f1b30/appointmentData",myObj)
+            .then(response => {
+                console.log(response)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+            showNewUserOnScreen(myObj)
+        }
+
+
+
+        window.addEventListener('DOMContentLoaded', () =>{
+            axios.get("https://crudcrud.com/api/026c7c3374924b6f87c3bb78749f1b30/appointmentData")
+            .then((response) => {
+                console.log(response);
+
+                for(var i=0;i<response.data.length;i++)
+                {
+                    showNewUserOnScreen(response.data[i])
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        })
+        function showNewUserOnScreen(user)
+        {
+            let parentNode=document.getElementById('listOfUsers');
+            let childHTML = `<li id=${user._id}> ${user.Price} - ${user.Description} - ${user.Product}
+                <button onclick=deleteUser('${user._id}')>Delete</button>
+                <button onclick=editUser('${user.Description}','${user.Price}','${user.Product}','${user._id}')>Edit</button>
+                </li>`;
+
+            parentNode.innerHTML=parentNode.innerHTML + childHTML;
+        }
+        function deleteUser(userId)
+        {
+                axios.delete(`https://crudcrud.com/api/026c7c3374924b6f87c3bb78749f1b30/appointmentData/${userId}`)
+                .then(response => {
+                    removeFromScreen(userId)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+        function editUser(email,name,contact,userId)
+        {
+                document.getElementById('description').value = description;
+                document.getElementById('price').value = cost;
+                //document.getElementById('contact').value = contact;
+
+                deleteUser(userId);
+
+        }
+        function removeFromScreen(userId){
+                let parentNode = document.getElementById('listOfUsers');
+                let childNodeToBeDeleted = document.getElementById(userId);
+
+                parentNode.removeChild(childNodeToBeDeleted)
+            }
+
+        </script>
+</body>
+</html>
